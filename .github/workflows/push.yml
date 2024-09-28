@@ -22,6 +22,6 @@ jobs:
       - uses: pulumi/actions@v3
         with:
           command: up
-          stack-name: awsdev/awsdev
+          stack-name: awsIAC/awsdev/awsdev
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
