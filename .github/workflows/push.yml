@@ -25,7 +25,7 @@ jobs:
         run: |
           python -m venv venv
           source venv/bin/activate
-          pip install -r pulumi/requirements.txt
+          pip install -r AWSIACProject/requirements.txt
 
   # Stage 2: Install Pulumi CLI and Login
   pulumi-setup:
