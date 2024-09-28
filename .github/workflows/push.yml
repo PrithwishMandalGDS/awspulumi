@@ -45,7 +45,7 @@ jobs:
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}  # Your Pulumi access token
 
-  # Stage 3: Select Stack
+   # Stage 3: Select Stack
   select-stack:
     runs-on: ubuntu-latest
     needs: pulumi-setup  # Dependent on the pulumi-setup stage
@@ -55,6 +55,8 @@ jobs:
 
       - name: Select Pulumi stack
         run: pulumi stack select dev  # Replace 'dev' with your actual stack name
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }} 
 
   # Stage 4: Cloud Authentication
   cloud-auth:
