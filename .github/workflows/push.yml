@@ -89,6 +89,7 @@ jobs:
           source venv/bin/activate
           pip install -r AWSIACProject/requirements.txt
           cd AWSIACProject
+          pulumi config set aws:region us-east-1
           pulumi stack select awsIAC/python-aws/AwsDev
           pulumi up --yes
         env:
