@@ -53,6 +53,9 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v3
 
+      - name: Change to the Pulumi directory
+        run: cd AWSIACProject  # Change this to your actual directory
+
       - name: Select Pulumi stack
         run: pulumi stack select awsIAC/pulumidev/pulumidev  # Replace 'dev' with your actual stack name
         env:

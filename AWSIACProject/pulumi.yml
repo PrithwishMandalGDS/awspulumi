@@ -1,0 +1,3 @@
+name: AWSIACProject
+runtime: python
+description: A sample Pulumi project
