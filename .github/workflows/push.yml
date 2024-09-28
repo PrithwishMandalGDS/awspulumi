@@ -85,7 +85,8 @@ jobs:
 
       - name: Deploy infrastructure using Pulumi
         run: |
-          cd AWSIACProject  # Change to the Pulumi directory
+          cd AWSIACProject
+          pulumi stack select awsIAC/python-aws/AwsDev
           pulumi up --yes
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
