@@ -54,7 +54,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Select Pulumi stack
-        run: pulumi stack select pulumidev/pulumidev/pulumidev  # Replace 'dev' with your actual stack name
+        run: pulumi stack select awsIAC/pulumidev/pulumidev  # Replace 'dev' with your actual stack name
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }} 
 
