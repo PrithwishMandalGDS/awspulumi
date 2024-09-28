@@ -85,6 +85,9 @@ jobs:
 
       - name: Deploy infrastructure using Pulumi
         run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install -r AWSIACProject/requirements.txt
           cd AWSIACProject
           pulumi stack select awsIAC/python-aws/AwsDev
           pulumi up --yes
