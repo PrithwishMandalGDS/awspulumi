@@ -58,7 +58,8 @@ jobs:
       - name: Select Pulumi stack
         run: |
           cd AWSIACProject
-          pulumi stack select awsIAC/AwsDev  
+          pulumi stack select awsIAC/python-aws/AwsDev
+  
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
