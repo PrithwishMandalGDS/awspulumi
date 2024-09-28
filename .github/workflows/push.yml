@@ -25,46 +25,47 @@ jobs:
         run: |
           python -m venv venv
           source venv/bin/activate
-          pip install -r requirements.txt
+          pip install -r pulumi/requirements.txt
 
   # Stage 2: Install Pulumi CLI and Login
   pulumi-setup:
     runs-on: ubuntu-latest
-    needs: setup  # Dependent on the setup stage
+    needs: setup
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
 
       - name: Install Pulumi CLI
-        uses: pulumi/action-install-pulumi-cli@v1  # Correct action for installing Pulumi CLI
+        uses: pulumi/action-install-pulumi-cli@v1
         with:
-          pulumi-version: latest  # Install the latest version of Pulumi
+          pulumi-version: latest
 
       - name: Login to Pulumi
-        run: pulumi login
+        run: |
+          cd AWSIACProject  # Change to the Pulumi directory
+          pulumi login
         env:
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}  # Your Pulumi access token
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
-   # Stage 3: Select Stack
+  # Stage 3: Select Stack
   select-stack:
     runs-on: ubuntu-latest
-    needs: pulumi-setup  # Dependent on the pulumi-setup stage
+    needs: pulumi-setup
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
 
-      - name: Change to the Pulumi directory
-        run: cd AWSIACProject  # Change this to your actual directory
-
       - name: Select Pulumi stack
-        run: pulumi stack select awsIAC/pulumidev/pulumidev  # Replace 'dev' with your actual stack name
+        run: |
+          cd AWSIACProject
+          pulumi stack select aws  
         env:
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }} 
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
   # Stage 4: Cloud Authentication
   cloud-auth:
     runs-on: ubuntu-latest
-    needs: select-stack  # Dependent on the select-stack stage
+    needs: select-stack
     steps:
       - name: Set up AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
@@ -73,18 +74,18 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      # Alternatively for Azure or GCP, replace this with your cloud provider authentication
-
   # Stage 5: Pulumi Deployment
   deploy:
     runs-on: ubuntu-latest
-    needs: cloud-auth  # Dependent on the cloud-auth stage
+    needs: cloud-auth
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
 
       - name: Deploy infrastructure using Pulumi
-        run: pulumi up --yes
+        run: |
+          cd AWSIACProject  # Change to the Pulumi directory
+          pulumi up --yes
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
